@@ -9,3 +9,5 @@ Javascript XML Is a syntax extension for javascript that allows developers to wr
 JSX looks very similar to HTML but it is not (becus it has different syntax). </br>
 
 NOTE: JSX is more strict than  normal HTML.  All elements need a closing tag.  </br>
+E.g  </br>
+<input placeholder="Send a message to Chatbot" size="30"></input>  </br>
