@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> ChatBot </title>
+
+
+    <style>
+      body {
+        font-family: Arial;
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+
+      .send-button {
+        background-color: rgb(25, 135, 84);
+        color: white;
+        padding: 12px 20px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .chat-input {
+        padding: 12px 15px;
+        border-radius: 10px;
+        border-width: 1px;
+        font-size: 15px;
+        flex-grow: 1;
+      }
+
+      .chat-input-container {
+         display: flex;
+
+         margin-bottom: 60px;
+      }
+
+      .app-container{
+         max-width: 600px;
+          margin-left: auto; 
+          margin-right: auto;
+
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+    
+      }
+      
+      .chat-message-user {
+        display: flex;
+        justify-content: end;
+        align-items: start;
+      }
+
+      .chat-message-robot {
+        display: flex;
+        align-items: start;
+      } 
+
+      .chat-message-text {
+        background-color: rgb(238, 238, 238);
+         padding: 15px 20px;
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        max-width: 300px;
+      }
+
+      .chat-message-profile {
+        width: 45px;
+      }
+
+
+      .chat-messages-container {
+        flex-grow: 1;
+
+        margin-top: 20px;
+        /* Overflow property :- Will help to make the chat messages scrollable instead of pushing the input textbox down. */
+        overflow: scroll;
+        scrollbar-width: none;
+      }
+
+      .welcome-message {
+        color: rgb(120, 120, 120);
+        text-align: center;
+      } 
+
+      .loading-spinner {
+        height: 40px;
+        margin: -15px;
+      }
+
+    </style>
+
+                                                                      
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+
+   
+    
+    <!-- <script src="https://unpkg.com/supersimpledev/react.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script> -->
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+    <!-- <script src="https://unpkg.com/babel.js"></script> -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    
+
+
+    <script type="text/babel">
+
+        // //EXTERNAL LIBRARY TO GET RESPONSE (It used above)
+
+        function ChatInput({chatMessages, setChatMessages}) {
+
+            //WE ARE SAVING THE "INPUT TEXT" USING (useState)
+            const [inputText, setInputText] =  React.useState('');
+
+
+            /* ADDING AN "isLoading" STATE TO <ChatInput> THAT WILL REPRESENT - IF IT IS LOADING (WAITING FOR A RESPONSE FROM A CHATBOT) 
+              - IF IT IS LOADING, DON'T ALLOW SENDING OF NEW MESSAGE
+              - ALSO DON'T ALLOW SENDING OF NEW MESSAGE (if inputText) IS EMPTY
+            */
+            // const [isLoading, setIsLoading] = React.useState(false);
+
+
+            // "EVENT HANDLER" FUNCTION FOR THE - INPUTING TEXTBOX (Create a handler function for when the text box changes)
+            function saveInputText(event) {
+              //console.log(event.target.value);
+              setInputText(event.target.value);
+            }
+
+            
+
+            function handleKeyDown(event) {
+              if(event.key === 'Enter') {
+                sendMessage();
+                // alert(`You pressed Enter! Input value: ${inputText}`);
+              }
+              else if (event.key === 'Escape') {
+                 setInputText('');
+              }
+            }
+
+
+
+            
+            // "EVENT HANDLER" FUNCTION FOR THE -  SAVING THE TEXT ON THE BUTTON (Create a handler function for when the button is clicked)
+            async function sendMessage() {
+
+              // TO CLEAR THE TEXT ON THE TEXTBOX
+                setInputText('');
+
+              // /*
+              // - IF IT IS LOADING, DON'T ALLOW SENDING OF NEW MESSAGE.. 
+              // - ALSO DON'T ALLOW SENDING OF NEW MESSAGE (if inputText) IS EMPTY 
+              // */
+              // if(isLoading || inputText === ''){
+              //   return;
+              // }
+              //  // Set isLoading to true at the start, and set it to
+              // // false after everything is done.
+              // setIsLoading(true);
+
+               //console.log(`Inputered Vale: ${inputText}`);
+
+               const newChatMessages = [
+                ...chatMessages,
+                {
+                  // message: 'test',
+                  message: inputText,
+                  sender: 'user',
+                  id: crypto.randomUUID()
+                }
+                ];
+
+                //setChatMessages(newChatMessages);
+
+              // setChatMessages([
+              //   ...chatMessages,
+              //   {
+              //     // message: 'test',
+              //     message: inputText,
+              //     sender: 'user',
+              //     id: crypto.randomUUID()
+              //   }
+              //   ]);
+
+
+                setChatMessages([
+                  ...newChatMessages,
+                  {
+                    // message: 'test',
+                    // message: response,
+                    // THIS MESSAGE HERE , CREATE A TEMPORARY LOADING ... MESSAGE
+                    message: <img src="loading-spinner.gif" className="loading-spinner" />,
+                    sender: 'robot',
+                    id: crypto.randomUUID()
+                  }
+                ]);
+
+
+                /*
+                  - TO GET RESPONSE USING THE "Chatbot object" -> A EXTERNAL LIBRARY CREATED BY SUPERSIMPLE DEV
+                  - WE NOW USING "Async/await" TO TAKE SOMETIME BEFORE RESPONDING TO THE
+                */
+                const response = await Chatbot.getResponseAsync(inputText);
+                
+                // console.log(response);
+                // setChatMessages([
+                //   ...chatMessages,
+                //   {
+                //     // message: 'test',
+                //     message: response,
+                //     sender: 'robot',
+                //     id: crypto.randomUUID()
+                //   }
+                // ]);
+                setChatMessages([
+                  ...newChatMessages,
+                  {
+                    // message: 'test',
+                    // message: response,
+                    // THIS MESSAGE HERE , CREATE A TEMPORARY LOADING ... MESSAGE
+                    message: response,
+                    sender: 'robot',
+                    id: crypto.randomUUID()
+                  }
+                ]);
+
+
+                // // TO CLEAR THE TEXT ON THE TEXTBOX
+                // setInputText('');
+            }
+
+
+            return (
+                <div className="chat-input-container">
+                  <input 
+                    placeholder="Send a message to Chatbot" 
+                    size="30"
+                    onChange={saveInputText}
+                    value={inputText}
+                    onKeyDown={handleKeyDown}
+                    className="chat-input"
+                    >
+                  </input>
+
+                  <button 
+                    onClick={sendMessage}
+                    className="send-button"
+                  >
+                    Send
+                  </button>
+                </div>
+            );
+        } 
+
+
+
+
+        function ChatMessage({message, sender}) {
+          // const message = props.message;
+          // const sender = props.sender;
+
+          //// OBJECT DESTURING 
+          // const {message, sender} = props;
+
+          // I COMMENTED THIS if(){} STATEMENT, BECUS WE ARE USING THE "GUARD OPERATOR or AND OPERATOr && " BY INSETING THE if(){} STATEMENT DIRECTLY WITH A GUARD OPERATOR DIRECTLY INSIDE OUR "JSX"
+          /*
+          if(sender === 'robot') {
+            return (
+              <div>
+                <img src="robot.png" width="50" />
+                {message}
+              </div>
+            );
+          }
+          */
+
+            return (
+              <div className={sender === 'user' 
+                ? 'chat-message-user' 
+                : 'chat-message-robot'
+              }>
+
+                {sender === 'robot' && (
+                  <img src="robot.png" className="chat-message-profile" />
+                )}
+                
+
+                <div className="chat-message-text">
+                  {message}
+                </div>
+                {sender === 'user' && (
+                  <img src="user.png" className="chat-message-profile" />
+                )}
+
+              </div>
+              // I ADDED THE "message" AS WELL IN A <div> SO THAT WE CAN STYLE IT IN CSS
+            );
+        }
+
+
+
+        // INSTEAD OF USING A VARIABLE TO SAVE OUR APP. A BEST PRACTICE IS TO USE "A COMPONENT TO CREATE THE APP" 
+        /*
+        const app = (
+            <>
+                <ChatInput></ChatInput>
+                <ChatMessage 
+                  message="hello chatbot" 
+                  sender="user" 
+                />
+                <ChatMessage 
+                  message="Hello! How can i help you?" 
+                  sender="robot" 
+                />
+                <ChatMessage 
+                  message="can you get me todays date?" 
+                  sender="user" 
+                />
+                <ChatMessage 
+                  message="Today is September 27" 
+                  sender="robot" 
+                />
+            </>
+        );
+        */
+
+
+
+
+        /*
+         - CURRENTLY Function "ChatMessages" IS JUST A NORMAL VARIABLE. 
+         - WHEN WE UPDATE "ChatMessages" IT WILL NOT UPDATE THE "Html"
+         - TO SOLVE THIS, WE CAN CONVERT "ChatMessages" INTO (STATE), WHEN WE UPDATE THE "ChatMessages" IT WILL UPDATE THE HTML
+        */
+
+
+         /*
+           INSTEAD OF MANUALLY TYUPING A NEW CHART MESSAGE COMPONENT, WE WILL USE "JAVASCRIPT" TO GENERATE THIS COMPONENTS. WE GOONA DO (2 STEPS)
+
+           1. SAVE THE DATA (DATA MEANS INFORMATION) 
+            //2nd step GENERATING THE HTML
+        */
+      //function ChatMessages({chatMessages}) {
+
+        /* React.useRef -> LETS US AUTOMATICALLY SAVE AN HTML ELEMENT
+        */
+      // const chatMessagesRef = React.useRef(null);
+
+
+      /*
+        CREATING OUR CUSTOM HOOK (PUTING HOOK TOGETHER IN ONE FUNCTION)
+      */
+      function useAutoScroll(dependencies) {
+        
+        const containerRef =  React.useRef(null);
+      
+        
+      
+        /*
+        - WE USING useEffect(), HOOK HERE, FOR CHATS TO AUTOMATICALLY SCROLL (LOAD)
+        - REACT WILL RUN THIS useEffect() FUNCTION inside it, AFTER THE COMPONENT IS CREATED..
+        ` 
+        */
+        React.useEffect(() => {
+          // console.log('updated');
+
+          //console.log(chatMessagesRef.current);
+          // const containerElem = chatMessagesRef.current;
+          
+          const containerElem = containerRef.current;
+          if(containerElem){
+            containerElem.scrollTop = containerElem.scrollHeight;
+          }
+          /*
+           - WE PUT THIS CODE "chatMessagesRef.current", 
+             BECUS , React.useEffect RUNS AFTER THE COMPONENT IS CREATED.
+             - THEREFORE , WE NEED TO WAIT FOR THE COMPONENT TO BE CREATED 1st , THEN WE CAN NOW ACCESS THIS "HTML ELEMENT" FOR OUR SCROLLING FUNCTIONALITY chatMessagesRef.current
+          */
+          
+        // }, [chatMessages]);
+          }, [dependencies]);
+
+          return containerRef;
+        }
+      
+
+        function ChatMessages({ chatMessages }){
+
+          const chatMessagesRef = useAutoScroll([chatMessages])
+
+
+        /*
+        WE MOVING THIS INTO THE "App()" COMPONENT , SO IT WILL BE VISIBLE AND CAN BE USED IN THE INPUT COMPONENT
+        */
+        //// CONVERTING "ChatMessages" INTO "STATE" useState
+       
+        //// SHORT-HAND 2 USED HERE (ARRAY DESTRUCTURING) INSTEAD OF LIKE THIS -> const array = React.useState([]);
+        // const [chatMessages, setChatMessages] = React.useState(
+        //   [
+        //     {
+        //       message: 'hello chatbot', 
+        //       sender: 'user', 
+        //       id: 'id1'
+        //     },
+        //     { message: 'Hello! How can i help you?',
+        //       sender: 'robot', 
+        //       id: 'id2'
+        //     },
+        //     { message: 'can you get me todays date?', 
+        //       sender: 'user', 
+        //       id: 'id3'
+        //     },
+        //     { message: 'Today is September 27', 
+        //       sender: 'robot', 
+        //       id: 'id4'
+        //     }
+        //   ]
+        // ); 
+
+
+        //// "array[0]" GETS THE CURRENT DATA
+        // const chatMessages = array[0]; 
+
+        //// "array[1]" IS A FUNCTION THAT UPDATES THE DATA
+        // const setChatMessages = array[1];
+
+        ////ARRAY DESTRUCTURING A (SHORT-HAND) FOR THE CODE ABOVE
+        //// SHORT-HAND 1
+        // const [chatMessages, setChatMessages] = array;
+
+
+        // const chatMessages = [
+        //   {
+        //     message: 'hello chatbot', 
+        //     sender: 'user', 
+        //     id: 'id1'
+        //   },
+        //   { message: 'Hello! How can i help you?',
+        //     sender: 'robot', 
+        //     id: 'id2'
+        //   },
+        //   { message: 'can you get me todays date?', 
+        //     sender: 'user', 
+        //     id: 'id3'
+        //   },
+        //   { message: 'Today is September 27', 
+        //     sender: 'robot', 
+        //     id: 'id4'
+        //   }
+        // ];
+
+
+        
+
+
+        // THE CODE WAS CREATED FOR PRATICE, SO GOONA BE COMMENTING IT OUT NOW AND REMOVE THE PRACTICE BUTTON AS WELL (THE CODE BELOW)
+
+        // //EVENT HANDLER FUNCTION
+        // function sendMessage() {
+        //   // INSTEAD OF USING UPDATING DATA DIRECTLY HERE WITH "Event handler".Push, WE GOONA USE THE "useState" UPDATER FUNCTION
+
+        //   // // console.log('send message');
+        //   // chatMessages.push({
+        //   //   message: 'Test', 
+        //   //   sender: 'user', 
+        //   //   id: crypto.randomUUID()
+        //   // });
+        //   // console.log(chatMessages);
+
+        //   // USING THE "spread Operator" WE MADE A COPY OF THE (chatMessages) ARRAY AND THEN WE ADDED A VALUE AT THE END OF THE NEW ARRAY
+        //   setChatMessages([
+        //     ...chatMessages,
+        //     {
+        //       message: 'test',
+        //       sender: 'user',
+        //       id: crypto.randomUUID()
+        //     }
+        //   ]);
+        // }
+
+            // REMOVED THIS ON THE return () <button onClick={sendMessage}> Send Message </button>  -> IT WAS FOR TESTING
+            //WE ARE NOW GEENRATING ALL THE "CHATMESSAGE" WITH JAVASCRIPT COMPONENTS INSTEAD OF WRITING IT ON THIS RETURN BELOW
+        return(
+          // WE TURNED THIS FROM <> FRAGMENT TO A <div> BECAUSE WE WANT TO STYLE IT ON CSS
+          <div className="chat-messages-container" ref={chatMessagesRef}>
+            
+
+            {chatMessages.map((chatMessage) => {
+              return(
+                <ChatMessage
+                  message={chatMessage.message}
+                  sender={chatMessage.sender}
+                  key={chatMessage.id}
+                />
+              );
+            })}
+          </div>
+        );
+        
+      } 
+
+
+
+
+      function App() {
+        /*
+           INSTEAD OF MANUALLY TYUPING A NEW CHART MESSAGE COMPONENT, WE WILL USE "JAVASCRIPT" TO GENERATE THIS COMPONENTS. WE GOONA DO (2 STEPS)
+
+           1. SAVE THE DATA (DATA MEANS INFORMATION) 
+        */
+
+         //NOTE: ARRAY IS A LIST OF VALUES.  AN "OBJECT" GROUP RELATED VALUES TOGETHER.
+         //1ST - step SAVING THE DATAs
+        // const chatMessages = [
+        //   {message: 'hello chatbot', sender: 'user', id: 'id1'},
+        //   {message: 'hello chatbot', sender: 'robot', id: 'id2'},
+        //   {message: 'can you get me todays date?', sender: 'user', id: 'id3'},
+        //   {message: 'Today is September 27', sender: 'robot', id: 'id4'}
+        // ];
+
+        // //2nd step GENERATING THE HTML
+        // const chatMessageComponents = chatMessages.map((chatMessage) => {
+        //   return(
+        //     <ChatMessage
+        //       message={chatMessage.message}
+        //       sender={chatMessage.sender}
+        //     />
+        //   );
+        // });
+
+
+        /*
+        return (
+          <>
+            <ChatInput></ChatInput>
+            <ChatMessage 
+              message="hello chatbot" 
+              sender="user" 
+            />
+            <ChatMessage 
+              message="Hello! How can i help you?" 
+              sender="robot" 
+            />
+            <ChatMessage 
+              message="can you get me todays date?" 
+              sender="user" 
+            />
+            <ChatMessage 
+              message="Today is September 27" 
+              sender="robot" 
+            />
+          </>
+        );
+        */
+
+        //WE ARE NOW GEENRATING ALL THE "CHATMESSAGE" WITH JAVASCRIPT COMPONENTS INSTEAD OF WRITING IT
+        // return (
+        //   <>
+        //     <ChatInput></ChatInput>
+            
+        //     {chatMessages.map((chatMessage) => {
+        //       return(
+        //         <ChatMessage
+        //           message={chatMessage.message}
+        //           sender={chatMessage.sender}
+        //           key={chatMessage.id}
+        //         />
+        //       );
+        //     }
+        //     )
+        //     }
+
+        //   </>
+        // );
+
+
+        const [chatMessages, setChatMessages] = React.useState(
+          [
+            // {
+            //   message: 'hello chatbot', 
+            //   sender: 'user', 
+            //   id: 'id1'
+            // },
+            // { message: 'Hello! How can i help you?',
+            //   sender: 'robot', 
+            //   id: 'id2'
+            // },
+            // { message: 'can you get me todays date?', 
+            //   sender: 'user', 
+            //   id: 'id3'
+            // },
+            // { message: 'Today is September 27', 
+            //   sender: 'robot', 
+            //   id: 'id4'
+            // }
+          ]
+          
+        ); 
+        
+          
+         
+
+        return (
+
+          <div className="app-container">
+            {
+              /* CHECK , IF THERE IS NO "chatMessages" DISPLAY A WELCOME MESSAGE THEN */
+              (chatMessages.length === 0) && (
+                <p className="welcome-message">
+                   Welcome to the chatbot project! Send a message using the textbox below.
+                </p>
+              )
+            }
+
+            <ChatMessages
+              chatMessages={chatMessages}
+            />
+
+            <ChatInput 
+              chatMessages={chatMessages}
+              setChatMessages={setChatMessages}
+            >
+            </ChatInput>
+          </div>
+        );
+      }
+
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+
+  </body>
+</html>

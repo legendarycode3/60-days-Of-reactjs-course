@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> CSS And HOOKS - Lesson 4.4</title>
+
+    
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev@8.6.4/dayjs.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- <script src="https://unpkg.com/babel.js"></script> -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    
+
+
+    <script type="text/babel">
+
+        /*
+        A  CLOCK PROJECT  (USING "React.useState")
+       */
+
+
+
+
+
+
+       function TimeClock({currentTime, setCurrentTime}) {
+
+            /*
+                - 2. SET UP AN "INTERVAL" TO UPDATE THE TIME EVERY MILLISECONDS (1 SECOND), WITH React.useEffect HOOK HANDLING IT
+            */ 
+            React.useEffect(() => {
+                // INTERVAL 
+                const timeId = setInterval(() => {
+                     setCurrentTime(dayjs().format('HH:mm:ss'));
+                     console.log('run code');
+                }, 1000);
+
+                /*
+                    - 3. CLEAN UP THE INTERVAL WHEN THE COMPONENT UNMOUNTS OR THE EFFECT RE-RUNS.
+                */
+                return () => {
+                    clearInterval(timeId);
+                }
+
+            }, []); 
+            /*  - THE EMPTY DEPENDENCY ARRAY ENSURES THE EFFECT    RUNS ONLY ONCE ON MOUNT.
+
+                - IMPORTANT: MAKE SURE TO GIVE "React.useEffect(),  A DEPENDENCY ARRAY OF [] , SO IT ONLY RUNS ONCE ! 
+            */
+
+            
+
+            /*
+                - 4. FORMAT AND RENDER THE CURRENT TIME , USING THE <p> </p> TAG
+            */
+            return (
+                <div>
+                    <p> 
+                        Current Time: {currentTime}
+                    </p>
+                </div>
+            );
+        }
+
+
+        
+        
+       
+
+        function App() {
+            /*
+                - 1. INITIALIZE STATE(React.useState) WITH THE THE CURRENT TIME USING "Day.js"
+            */
+            const [currentTime, setCurrentTime] =  React.useState(dayjs().format('HH:mm:ss'));
+           
+
+            /*
+                - 5.  DISPLAY IT ON THE UI / SCREEN FROM THE APP COMPONENT AND RETURN THE COMPONENT USED ABOVE HERE
+            */
+            return (
+                <div>
+                    <TimeClock 
+                        currentTime = {currentTime}  
+                        setCurrentTime = {setCurrentTime} 
+                    />
+                </div>
+            );
+            
+        }
+
+
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+
+  </body>
+</html>

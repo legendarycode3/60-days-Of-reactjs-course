@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> CSS And HOOKS - Lesson 4.4</title>
+
+    <style>
+        .title-text {
+            font-size: 21px;
+        }
+
+        .email-TextBox
+        {
+            margin-top: 15px;
+            padding: 10px 15px 10px 15px;
+            border-radius: 5px;
+        }
+        
+        .password-TextBox {
+             margin-top: 10px;
+             padding: 10px 15px 10px 15px;
+             border-radius: 5px;
+        }
+
+        .login-Button, 
+        .signUp-Button {
+            background-color: rgb(0, 123, 255);
+            color: white;
+            padding: 10px 15px 10px 15px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 20px;
+            margin-right: 5px;
+        }
+
+        .show-Password-Button {
+            margin-left: 5px;
+        }
+        
+        
+
+
+    </style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- <script src="https://unpkg.com/babel.js"></script> -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    
+
+
+    <script type="text/babel">
+
+        /*
+        A PROJECT THAT ES A SIGN-UP AND SIGN-IN PAGE
+       */
+
+
+
+       function Message() {
+            return (
+                <div>
+                    <p className="title-text"> 
+                        Hello, Welcome to my website 
+                    </p>
+                </div>
+            );
+        }
+
+
+        
+        
+        function LoginForm({isPasswordShown, setIsPasswordShown}) {
+
+             //FUNCTION TO TOGGLE THE "BOOLEAN VALUE"
+            function passwordSwitchButtonClick() {
+                if(isPasswordShown){
+                    setIsPasswordShown(false);
+                }
+                else{
+                    setIsPasswordShown(true);
+                }
+                // setShowPassword(!showPassword);
+            }
+
+            return (
+                <>
+                    <div>
+                        <input className="email-TextBox"
+                            placeholder="Email"
+                        >
+                        </input>
+                    </div>
+
+                    <div>
+                        <input className="password-TextBox" type={isPasswordShown ? 'texts' : 'password'}
+                             placeholder="Passwords"
+                        >
+                        </input>
+
+                        <button className="show-Password-Button" onClick={passwordSwitchButtonClick}>
+                            {isPasswordShown ? 'Hide PassWord' : 'Show PassWord'}
+                        </button>
+                    </div>
+                    
+                    <>
+                        <button className="login-Button">
+                            Login
+                        </button>
+                    </>
+
+                    <>
+                        <button className="signUp-Button">
+                            Signup
+                        </button>
+                    </>
+                </>
+            );
+
+            
+        }
+
+
+    
+
+
+        function App() {
+             /* 
+                - DECLARE A STATE VARIABLE 'isVisible' WITH AN INITIAL VALUE OF 'true'
+                - State(React.useState) to manage the "visibilty"
+             */
+            const [isPasswordShown, setIsPasswordShown] = React.useState(false);
+
+            /* 
+                - DECLARE A STATE VARIABLE 'isVisible' WITH AN INITIAL VALUE OF 'true'
+                - State(React.useState) to manage the input type ('password'/'text')
+             */
+            // const [inputType, setInputType] = React.useState('password');
+            
+            return(
+                <>
+                    <Message />
+
+                    <LoginForm
+                        isPasswordShown = {isPasswordShown}  
+                        setIsPasswordShown = {setIsPasswordShown} 
+                    />
+
+                </>
+            );
+
+        }
+
+
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+
+  </body>
+</html>

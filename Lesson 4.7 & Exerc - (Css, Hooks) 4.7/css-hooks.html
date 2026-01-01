@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> CSS AND HOOKS - LESSON 4.7</title>
+
+    <style>
+        body {
+            margin-top: 0;
+            margin-bottom: 0;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .buttons-Container {
+             display: flex;
+            justify-content: center;
+            /* flex-direction: row; */
+             background-color: rgb(200, 200, 200);
+            align-items: center;
+        }
+
+        .increase-Button,
+        .reset-Button,
+        .auto-Button {
+            background-color: rgb(25, 135, 84);
+            color: white;
+            margin-right: 10px;
+            padding: 5px 5px 5px 5px;
+            border: none;
+        }
+
+       
+    </style>
+
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+
+
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+
+        /*
+             A COUNTER APP PROJECT
+        */
+
+        
+        function App() {
+             //1.  WE USE THE "useState" HOOK. THE ARGUMENT(0) IS THE INITIAL VALUE OF THAT STATE, THE VERY FIRST TIME THE COMPONENT RENDERS.
+            const [count, setCount] = React.useState(0);
+
+
+            /*2.  React.useRef -> LETS US AUTOMATICALLY SAVE AN HTML ELEMENT
+            */
+            const autoClickRef = React.useRef();
+
+
+            /* 3. 
+            - EVENT HANDLER FOR THE BUTTON - COUNT
+            - UPDATING THE STATE VARIABLE "value" BY INCREMENTING IT BY ONE
+            */
+            function handleIncreaseButtonClick() {
+                //UPDATES A STATE VARIABLE -> const [value, setValue] = useState(initialValue); 
+                //, setValue is the state setter function returned by React [1].
+                 setCount(count + 1);
+            }
+
+
+            /* 4. 
+            - EVENT HANDLER FOR THE BUTTON - RESET
+            - UPDATING THE STATE VARIABLE "value" BY RESETING IT  (TO INITIAL STARTING POINT "0")
+            */
+             function handleResetClick() {
+                setCount(0);
+            }
+
+
+             /* 5. 
+            - EVENT HANDLER FOR THE BUTTON - AUTOBUTTONCLICK
+            - UPDATING THE STATE VARIABLE "value" BY COUNTING AUTOMATICALLY USING THE - setInterval 
+            */
+            function handleAutoButtonClick() {
+
+                /* 6. THESE "setInterval" AUTHENTICATE THE AUTOMATIC COUNT
+                */
+                setInterval(() => {
+                    const autoButtonElem = autoClickRef.current;
+                    if(autoButtonElem) {
+                        // setCount(count + 1);
+                        autoButtonElem.click();
+                    }
+                }, 1000);
+            }
+
+
+            /* 
+                7. RETURN THE COMPONENT HERE TO DISPLAY THE "BUTTONS"
+            */
+            return(
+                <div className="buttons-Container">
+            
+                        <button className="increase-Button" onClick={handleIncreaseButtonClick} ref={autoClickRef}> 
+                        CLICKED  {count} {count === 1 ? 'TIME' : 'TIMES'}
+                        </button>
+              
+                    <>
+                        <button className="reset-Button"     onClick={handleResetClick}>
+                            RESET
+                        </button>
+                    </>
+                    
+                    <>
+                        <button  className="auto-Button"  onClick={handleAutoButtonClick}>      
+                            AUTO CLICK
+                        </button>
+                    </>
+                    
+                </div>
+            );
+
+
+        }
+
+
+
+
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+
+  </body>
+</html>

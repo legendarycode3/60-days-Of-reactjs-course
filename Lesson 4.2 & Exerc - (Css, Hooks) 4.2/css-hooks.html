@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> CSS And HOOKS - Lesson 4.2</title>
+
+    <style>
+        .on-Button {
+            background-color: green;
+            color: white;
+            padding: 10px 15px 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .off-Button {
+            background-color: rgb(220, 53, 69);
+            color: white;
+            padding: 10px 15px 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- <script src="https://unpkg.com/babel.js"></script> -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    
+
+
+    <script type="text/babel">
+
+        /*
+        A PROJECT THAT WHEN THE BUTTON IS "OFF"  THE BACKGROUND IS (RED). AND WHEN THE BUTTON IS TOGGLED "ON" THE BACKGROUND IS (GREEN)
+       */
+
+
+        function SwitchButton({isToggled, setIsToggled}) {
+            //DECLARE A STATE VARIABLE 'isToggled' WITH AN INITIAL VALUE OF 'false'
+            //const [isToggled, setIsToggled] = React.useState(true);
+
+
+            //FUNCTION TO TOGGLE THE "BOOLEAN VALUE"
+            function handleSwitchButtonClick() {
+                //This line calls the updater function "setIsToggled".  
+                // setIsToggled(!isToggled);
+                if(isToggled){
+                    setIsToggled(false);
+                }
+                else{
+                    setIsToggled(true);
+                }
+            }
+
+
+            return (
+                <button onClick={ handleSwitchButtonClick}>
+                    {isToggled ? (
+                            <div className="on-Button" > 
+                                ON
+                            </div> 
+                        ) : (
+                            <div className="off-Button" > 
+                                OFF 
+                            </div>
+                        )
+                    }
+                
+                </button>
+            );
+        } 
+
+
+        /*
+        {isToggled ? (
+                        <div>
+                            ON
+                        </div>
+                    ): (
+                        <div>
+                             Off
+                        </div>
+                    )}
+         */
+
+
+
+
+    
+
+
+        function App() {
+             //DECLARE A STATE VARIABLE 'isToggled' WITH AN INITIAL VALUE OF 'false'
+            const [isToggled, setIsToggled] = React.useState(false);
+
+            
+            return(
+                <>
+                    <SwitchButton  
+                        isToggled = {isToggled}
+                        setIsToggled = {setIsToggled}
+                    />
+
+                </>
+            );
+
+        }
+
+
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+
+  </body>
+</html>

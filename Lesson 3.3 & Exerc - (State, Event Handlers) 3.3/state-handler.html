@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> State And EventHandler - Lesson 3</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- <script src="https://unpkg.com/babel.js"></script> -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    
+
+
+    <script type="text/babel">
+
+
+
+
+        /*
+            "Counter COMPONENT" - I USE THESE COUNTER TO CREATE 2 COUNTER  ON THE  WEBSITE
+        */
+        function Counter({count, setCount}) {
+
+
+            /*
+            - EVENT HANDLER FOR THE BUTTON
+            - UPDATING THE STATE VARIABLE "value" BY INCREMENTING IT BY ONE
+            */
+            function handleButtonClick() {
+                //UPDATES A STATE VARIABLE -> const [value, setValue] = useState(initialValue); 
+                //, setValue is the state setter function returned by React [1].
+                 setCount(count + 1);
+            }
+            
+            
+            return (
+                <button onClick={handleButtonClick}>       Clicked {count} {count === 1 ? 'time' : 'times'}
+                </button>
+            );
+        }
+
+
+
+
+
+        /* "RESET BUTTON COMPONENT" - I AM SETTING THE COUNTER TO (0) WHICH IS THE INITIAL
+        */
+        function Reset({setCount}) {
+            function handleResetClick() {
+                setCount(0);
+            }
+            return (
+                <button onClick={handleResetClick}>
+                    Reset
+                </button>
+            );
+        } 
+
+
+
+
+
+        function App() {
+          /* USING THE "STATE HOOK" WITH React.useState HERE , TO ADD STATE MANAGEMENT TO THE FUNCTION COMPONENT
+            */
+           // WE USE THE "useState" HOOK. The argument (0) is the initial value of that state the very first time the component renders.
+            const [count, setCount] = React.useState(0);
+
+
+              
+            return(
+                <>
+                    <Counter 
+                        count={count}
+                        setCount={setCount}
+                    />
+
+                    <Counter 
+                        count={count}
+                        setCount={setCount}
+                    />
+
+                    <Reset 
+                        setCount={setCount}
+                    />
+                </>
+            );
+
+        }
+
+
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+
+  </body>
+</html>
