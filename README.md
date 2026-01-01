@@ -11,3 +11,4 @@ JSX looks very similar to HTML but it is not (becus it has different syntax). </
 NOTE: JSX is more strict than  normal HTML.  All elements need a closing tag.  </br>
 E.g  </br>
 <input placeholder="Send a message to Chatbot" size="30"></input>  </br>
+But if you not goona put anything inside or nothing inside our element , you can use a “self closing tag” like this <input /> </br>
