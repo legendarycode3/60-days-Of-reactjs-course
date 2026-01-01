@@ -16,3 +16,4 @@ But if you not goona put anything inside or nothing inside our element , you can
 
 ✔️ What is Babel ?  </br>
 Babel is known as a “Javascript compiler”. It basically translate other languages into javascript. </br>
+Why do we need Babel: </br>
