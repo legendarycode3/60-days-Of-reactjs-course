@@ -23,3 +23,4 @@ JSX stands for “Javascript  XML”. Is the same as javascript but we can also 
 
 
 **COMPONENTS, PROPS, SHORTCUTS IN REACT - LESSON 2** </br>
+✔️ What is Component ? </br>
