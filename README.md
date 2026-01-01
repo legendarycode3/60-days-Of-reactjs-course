@@ -26,3 +26,4 @@ JSX stands for “Javascript  XML”. Is the same as javascript but we can also 
 ✔️ What is Component ? </br>
 Is one of the most important features of Reactjs called “Component”. </br>
 A component is just a piece of  a website.  </br>
+To create a “component” in React, we goona use a function. </br>
