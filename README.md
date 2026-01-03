@@ -1,7 +1,7 @@
-**MASTERING REACTJS COURSE WITH EXCERCISES** <br/>
+## MASTERING REACTJS COURSE WITH EXCERCISES <br/>
 
 
-REACT BASICs, JSX
+**REACT BASICs, JSX**
 ✔️ What is Reactjs ?  </br>
 React is an external library that helps us create websites easier. </br>
 
