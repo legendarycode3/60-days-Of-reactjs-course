@@ -42,3 +42,8 @@ Using the “props object” we can access our attribute & also make our compone
 ✔️ShortCuts Commonly Used In Reactjs ? </br>
 Some “shortcuts” that are commonly used in React, they include </br>
 1) Using javascript instead of doing this  **const message = props.message; and const sender = props.sender;**  We can use this **const {message, sender} = props;** which is a shortcut for that 2 different const variables. And this shortcut is called “destructuring”. </br>
+
+
+
+
+STATE, EVENT HANDLERS, CREATE THE CHATBOT FEATURES - LESSON 3 </br>
