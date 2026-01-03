@@ -29,3 +29,5 @@ A component is just a piece of  a website.  </br>
 To create a “component” in React, we goona use a function. </br>
 Components are designed to be reusable(using attribute). </br>
 Components lets us create our own  HTML elements. </br>
+
+E.g: Example when using a component in a website  </br>
