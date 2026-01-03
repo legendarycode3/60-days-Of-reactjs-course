@@ -32,3 +32,7 @@ Components lets us create our own  HTML elements. </br>
 
 NOTE: We can have  “components” inside of a component. It helps us split our website , 		into smaller & smaller components or smaller and smaller pieces. </br>
 ✔️ Fragment: In Reactjs, we use it to group elements together. It helps us not to have extra div, if we don’t. </br>
+
+✔️ What is Props ?  
+Every “component function”, gets one parameter called props. 
+The “props”  parameter is an object and it will contain all the attributes that we give to any component. 
