@@ -30,14 +30,29 @@ To create a “component” in React, we goona use a function. </br>
 Components are designed to be reusable(using attribute). </br>
 Components lets us create our own  HTML elements. </br>
 
-E.g: Example when using a component in a website  </br>
-function ChatInput() { </br>
-            return (
-                <> 
-                    <input placeholder="Send a message to Chatbot" size="30"></input> 
-                    <button>Send</button>
-                </> 
-            ); 
- } </br>
 
 NOTE: We can have  “components” inside of a component. It helps us split our website , 		into smaller & smaller components or smaller and smaller pieces. </br>
+E.g: </br>
+function App() {
+        return (
+          <>
+            <ChatInput></ChatInput>
+            <ChatMessage 
+              message="hello chatbot" 
+              sender="user" 
+            />
+            <ChatMessage 
+              message="Hello! How can i help you?" 
+              sender="robot" 
+            />
+            <ChatMessage 
+              message="can you get me todays date?" 
+              sender="user" 
+            />
+            <ChatMessage 
+              message="Today is September 27" 
+              sender="robot" 
+            />
+          </>
+        );
+  }
