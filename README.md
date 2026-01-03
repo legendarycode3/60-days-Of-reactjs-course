@@ -34,7 +34,7 @@ Components lets us create our own  HTML elements. </br>
 NOTE: We can have  “components” inside of a component. It helps us split our website , 		into smaller & smaller components or smaller and smaller pieces. </br>
 E.g: </br>
 function App() {
-        return (
+        return ( </br>
           <>
             <ChatInput></ChatInput>
             <ChatMessage 
@@ -54,5 +54,5 @@ function App() {
               sender="robot" 
             />
           </>
-        );
-  }
+        ); </br>
+  } </br>
