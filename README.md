@@ -33,9 +33,11 @@ Components lets us create our own  HTML elements. </br>
 E.g: Example when using a component in a website  </br>
 function ChatInput() { </br>
             return ( </br>
-                <> </br>
-                    <input placeholder="Send a message to Chatbot" size="30"></input> </br>
+                <> 
+                    <input placeholder="Send a message to Chatbot" size="30"></input> 
                     <button>Send</button>
-                </> </br>
+                </> 
             ); </br>
  } </br>
+
+NOTE: We can have  “components” inside of a component. It helps us split our website , 		into smaller & smaller components or smaller and smaller pieces. </br>
