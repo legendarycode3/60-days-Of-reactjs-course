@@ -38,3 +38,5 @@ Every “component function”, gets one parameter called props. </br>
 The “props”  parameter is an object and it will contain all the attributes that we give to any component.  </br>
 Props, is the short form for properties. </br>
 Using the “props object” we can access our attribute & also make our components reusable. </br>
+
+✔️ShortCuts Commonly Used In Reactjs ? </br>
