@@ -58,3 +58,4 @@ When a component state changes (usually in response to users input or an API cal
 NOTE: Keep in mid that in React (State) , anything that starts with “use” , is typically refered to as a Hook (e.g useState) </br>
 
 ✔️ What Is useState? </br>
+ The useState hook in React allows functional components to have State. Which is local memory for data that needs to change over time or across user interaction. </br>
