@@ -39,6 +39,7 @@ Every “component function”, gets one parameter called props. </br>
 The “props”  parameter is an object and it will contain all the attributes that we give to any component.  </br>
 Props, is the short form for properties. </br>
 Using the “props object” we can access our attribute & also make our components reusable. </br>
+Props, helps us to be able to pass data from one component to another. To display something specific & not create & not create multiple similar components (for every little change). You typical do it from a parent component to a child component. </br>
 
 ✔️ShortCuts Commonly Used In Reactjs ? </br>
 Some “shortcuts” that are commonly used in React, they include </br>
