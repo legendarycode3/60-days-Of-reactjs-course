@@ -51,3 +51,4 @@ Some “shortcuts” that are commonly used in React, they include </br>
 ➡️ **STATE, EVENT HANDLERS - LESSON 3** </br>
 ✔️ What Is State ?  </br>
 State is a built-in object that allows components to store and manage dynamic data that changes over time. State helps us make a website interative. </br>
+“State” is a data that is connected to the HTML (meaning , when we update the data , it will update the HTML). To convert data’s into state, we use React.useState() & useState() givs us two values (which are: The current data & Updater function).  </br>
