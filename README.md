@@ -67,3 +67,4 @@ State: State is a core concept. It refers to the data or properties that a compo
 useState: useState is a specific tool(a Hook) provided by React to manage that concept within functional components to use State. </br>
 To use the “useState” , you call the “useState” within a functional components to declare a state variable ,. It returns an array  containing (the following 2 properties): </br>
 1. The current state value. </br>
+2. The function to update that value (which triggers a re-render). </br>
