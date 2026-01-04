@@ -54,3 +54,5 @@ State is a built-in object that allows components to store and manage dynamic da
 “State” is a data that is connected to the HTML (meaning , when we update the data , it will update the HTML). To convert data’s into state, we use React.useState() & useState() givs us two values (which are: The current data & Updater function).  </br>
 “State” is like a React component brain. It holds the information the components that can change over-time. </br>
 When a component state changes (usually in response to users input or an API call),  React automatically re-renders the component to reflect the new data in the UI. </br>
+
+NOTE: Keep in mid that in React (State) , anything that starts with “use” , is typically refered to as a Hook (e.g useState) </br>
